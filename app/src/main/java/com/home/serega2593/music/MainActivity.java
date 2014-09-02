@@ -12,8 +12,9 @@ import android.widget.ListView;
 
 import java.util.ArrayList;
 
-
 public class MainActivity extends ActionBarActivity implements View.OnClickListener, AdapterView.OnItemClickListener {
+
+    private ListAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,15 +29,13 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         ListView mListView = (ListView) findViewById(R.id.folder_listView);
         mStart.setOnClickListener(this);
         mStop.setOnClickListener(this);
-        mListView.setOnItemClickListener(this);
 
         FilesManager manager = new FilesManager();
-        ArrayList<String> listdirec = manager.getDirs(manager.ROOT);
-        ArrayList<Model> models = manager.getNumber(listdirec);
-
-        mListView.setAdapter(new ListAdapter(this, models));
-
-
+        ArrayList<String> listDirec = manager.getDirs(manager.ROOT);
+        ArrayList<Model> models = manager.getNumber(listDirec);
+        mAdapter = new ListAdapter(this, models);
+        mListView.setAdapter(mAdapter);
+        mListView.setOnItemClickListener(this);
     }
 
     @Override
@@ -60,7 +59,6 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         stopService(new Intent(MainActivity.this, PlayService.class));
     }
 
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -74,16 +72,14 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
+        return id == R.id.action_settings || super.onOptionsItemSelected(item);
     }
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-//        adapterView.getItemAtPosition(i);
-//        Intent intent = new Intent(this, DetialActivity.class);
-//        intent.putExtra("item", )
+        adapterView.getItemAtPosition(i);
+        Intent intent = new Intent(this, DetialActivity.class);
+        intent.putExtra(Intent.EXTRA_TEXT, mAdapter.getItem(i).getDir_name());
+        startActivity(intent);
     }
 }

@@ -1,5 +1,6 @@
 package com.home.serega2593.music;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
@@ -15,7 +16,7 @@ public class DetialActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detial);
-
+        Intent intent = getIntent();
         TextView mTextView = (TextView) findViewById(R.id.detail_textView);
         Button mBack = (Button) findViewById(R.id.back_button);
         mBack.setOnClickListener(new View.OnClickListener() {
@@ -24,11 +25,7 @@ public class DetialActivity extends ActionBarActivity {
                 onBackPressed();
             }
         });
-
-
-
-
-
+        mTextView.setText(intent.getStringExtra(Intent.EXTRA_TEXT));
     }
 
     @Override
