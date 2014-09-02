@@ -40,6 +40,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="directories:"
+        android:layout_marginRight="5dp"
         android:layout_alignParentTop="true"
         android:layout_toLeftOf="@+id/dirs_textView"
         android:layout_toStartOf="@+id/dirs_textView"
@@ -50,9 +51,9 @@
         android:layout_height="wrap_content"
         android:text="files:"
         android:id="@+id/textView2"
+        android:layout_marginRight="5dp"
         android:layout_below="@+id/textView3"
-        android:layout_alignRight="@+id/textView3"
-        android:layout_alignEnd="@+id/textView3" />
+        android:layout_toLeftOf="@+id/files_textView"/>
 
 
 </RelativeLayout>

@@ -30,7 +30,6 @@ public class PlayService extends Service {
     @Override
     public void onCreate() {
         mMediaPlayer = MediaPlayer.create(PlayService.this, R.raw.sound);
-        mMediaPlayer.setLooping(true);
         mMediaPlayer.start();
         registerReceiver(mReceiver, intFilt);
     }
