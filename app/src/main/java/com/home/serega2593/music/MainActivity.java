@@ -1,15 +1,19 @@
 package com.home.serega2593.music;
 
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ListView;
+
+import java.util.ArrayList;
 
 
-public class MainActivity extends ActionBarActivity implements View.OnClickListener {
+public class MainActivity extends ActionBarActivity implements View.OnClickListener, AdapterView.OnItemClickListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -17,11 +21,22 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
         Intent intent = new Intent(MainActivity.this, PlayService.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        startService(intent);
+//        startService(intent);
+
         Button mStart = (Button) findViewById(R.id.start_button);
         Button mStop = (Button) findViewById(R.id.stop_button);
+        ListView mListView = (ListView) findViewById(R.id.folder_listView);
         mStart.setOnClickListener(this);
         mStop.setOnClickListener(this);
+        mListView.setOnItemClickListener(this);
+
+        FilesManager manager = new FilesManager();
+        ArrayList<String> listdirec = manager.getDirs(manager.ROOT);
+        ArrayList<Model> models = manager.getNumber(listdirec);
+
+        mListView.setAdapter(new ListAdapter(this, models));
+
+
     }
 
     @Override
@@ -63,5 +78,12 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+//        adapterView.getItemAtPosition(i);
+//        Intent intent = new Intent(this, DetialActivity.class);
+//        intent.putExtra("item", )
     }
 }

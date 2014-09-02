@@ -7,9 +7,8 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.media.MediaPlayer;
 import android.os.IBinder;
-import android.widget.Toast;
 
-public class PlayService extends Service implements MediaPlayer.OnCompletionListener {
+public class PlayService extends Service {
 
     private MediaPlayer mMediaPlayer;
 
@@ -30,17 +29,10 @@ public class PlayService extends Service implements MediaPlayer.OnCompletionList
 
     @Override
     public void onCreate() {
-    }
-
-    public int onStartCommand(Intent intent, int flags, int startId) {
-
         mMediaPlayer = MediaPlayer.create(PlayService.this, R.raw.sound);
         mMediaPlayer.setLooping(true);
-        mMediaPlayer.setOnCompletionListener(this);
         mMediaPlayer.start();
         registerReceiver(mReceiver, intFilt);
-
-        return super.onStartCommand(intent, flags, startId);
     }
 
     @Override
@@ -54,8 +46,4 @@ public class PlayService extends Service implements MediaPlayer.OnCompletionList
         return null;
     }
 
-    @Override
-    public void onCompletion(MediaPlayer mediaPlayer) {
-        Toast.makeText(this, "Play stopping", Toast.LENGTH_LONG).show();
-    }
 }
