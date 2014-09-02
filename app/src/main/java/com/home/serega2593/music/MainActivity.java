@@ -10,8 +10,6 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 
-import java.util.ArrayList;
-
 public class MainActivity extends ActionBarActivity implements View.OnClickListener, AdapterView.OnItemClickListener {
 
     private ListAdapter mAdapter;
@@ -31,9 +29,10 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         mStop.setOnClickListener(this);
 
         FilesManager manager = new FilesManager();
-        ArrayList<String> listDirec = manager.getDirs(manager.ROOT);
-        ArrayList<Model> models = manager.getNumber(listDirec);
-        mAdapter = new ListAdapter(this, models);
+//        ArrayList<String> listDirec = manager.getDirs(manager.ROOT);
+//        ArrayList<Model> models = manager.getNumber(listDirec);
+//        mAdapter = new ListAdapter(this, models);
+        mAdapter = new ListAdapter(this, manager.getDirs(manager.ROOT));
         mListView.setAdapter(mAdapter);
         mListView.setOnItemClickListener(this);
     }
@@ -79,7 +78,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         adapterView.getItemAtPosition(i);
         Intent intent = new Intent(this, DetialActivity.class);
-        intent.putExtra(Intent.EXTRA_TEXT, mAdapter.getItem(i).getDir_name());
+        intent.putExtra(Intent.EXTRA_TEXT, mAdapter.getItem(i).getName());
         startActivity(intent);
     }
 }

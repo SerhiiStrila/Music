@@ -30,12 +30,12 @@ public class FilesManager {
         return fileList;
     }
 
-    public ArrayList<String> getDirs(File dir) {
+    public ArrayList<File> getDirs(File dir) {
         File listFile[] = dir.listFiles();
-        ArrayList<String> dirList = new ArrayList<String>();
+        ArrayList<File> dirList = new ArrayList<File>();
         for (File aListFile : listFile) {
             if (aListFile.isDirectory()) {
-                dirList.add(aListFile.getName());
+                dirList.add(aListFile);
             }
         }
         return dirList;
@@ -44,18 +44,17 @@ public class FilesManager {
     public ArrayList<Model> getNumber(ArrayList<String> dirList) {
         ArrayList<Model> all = new ArrayList<Model>();
         for (String dir : dirList) {
-            int[] num = Files_Dirs(getAll(new File(ROOT + "/" + dir)));
+            int[] num = filesDirsInFolder(getAll(new File(ROOT + "/" + dir)));
             Model model = new Model();
             model.setDir_name(dir);
             model.setDirs(String.valueOf(num[0]));
             model.setFiles(String.valueOf(num[1]));
             all.add(model);
         }
-
         return all;
     }
 
-    private int[] Files_Dirs(ArrayList<File> arrayList) {
+    private int[] filesDirsInFolder(ArrayList<File> arrayList) {
         int dir = 0;
         int files = 0;
         for (File aListFile : arrayList) {
